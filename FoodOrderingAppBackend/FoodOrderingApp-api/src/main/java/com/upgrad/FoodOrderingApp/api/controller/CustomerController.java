@@ -78,14 +78,14 @@ public class CustomerController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/customer/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LoginResponse> login(
-            @RequestHeader("authorization") final String authorization)
+            @RequestHeader("authentication") final String authentication)
             throws AuthenticationFailedException
     {
         byte[] decode;
         String contactNumber;
         String customerPassword;
         try {
-            decode = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
+            decode = Base64.getDecoder().decode(authentication.split("Basic ")[1]);
             String decodedText = new String(decode);
             String[] decodedArray = decodedText.split(":");
             contactNumber = decodedArray[0];
