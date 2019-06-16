@@ -1,45 +1,29 @@
 package com.upgrad.FoodOrderingApp.service.dao;
-
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
+/**
+ * CustomerAddressDao class provides the database access for all the required endpoints in customer and address controller
+ */
 @Repository
 public class CustomerAddressDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-    //gets customerAddress record of a particular addressId
-    public CustomerAddressEntity getCustomerAddressByAddressId(long AddressId){
 
-        try {
-            return this.entityManager.createNamedQuery("customerAddressByAddressId", CustomerAddressEntity.class).setParameter("id", AddressId).getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-    //gets customerAddressList of a particular customerId
-    public List<CustomerAddressEntity> getCustomerAddressesListByCustomerId(CustomerEntity customerEntity){
-
-        try {
-            return this.entityManager.createNamedQuery("customerAddressesListByCustomerId", CustomerAddressEntity.class).setParameter("customer", customerEntity).getResultList();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-    //gets address record by Id
-    public AddressEntity getAddressById(long id){
-
-        try {
-            return this.entityManager.createNamedQuery("AddressById", AddressEntity.class).setParameter("id", id).getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
+    /**
+     * Creates relation between customer and address entity
+     *
+     * @param customerAddressEntity Customer and address to relate
+     *
+     * @return CustomerAddressEntity object
+     */
+    public CustomerAddressEntity createCustomerAddress(CustomerAddressEntity customerAddressEntity) {
+        entityManager.persist(customerAddressEntity);
+        return customerAddressEntity;
     }
 }

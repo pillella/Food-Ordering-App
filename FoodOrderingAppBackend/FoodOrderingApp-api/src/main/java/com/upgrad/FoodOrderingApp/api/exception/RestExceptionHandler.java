@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.api.exception;
 
-<<<<<<< Rest-API-Endpoints-I
 import com.upgrad.FoodOrderingApp.api.model.ErrorResponse;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.http.HttpStatus;
@@ -146,5 +145,5 @@ public class RestExceptionHandler {
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.BAD_REQUEST
         );
     }
-
+}
 

@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import org.springframework.stereotype.Repository;
 
@@ -10,33 +8,39 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * StateDao class provides the database access for all the required endpoints in address controller
+ */
 @Repository
 public class StateDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<StateEntity> getAllStates(){
-
+    /**
+     * This method helps fetch existing State by StateID
+     *
+     * @param uuid the state UUID which will be searched in database to find existing state
+     *
+     * @return StateEntity object if given state exists in database
+     */
+    public StateEntity getStateByUUID(String uuid) {
         try {
-            return this.entityManager.createNamedQuery("allStates", StateEntity.class).getResultList();
+            return entityManager.createNamedQuery("stateByUUID", StateEntity.class).setParameter("uuid", uuid).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
-    public StateEntity getStateByStateUuid(String StateUuid) {
+    /**
+     * This method helps to fetch all states
+     *
+     * @return List<StateEntity> object
+     */
+    public List<StateEntity> getAllStates() {
         try {
-            return (StateEntity)this.entityManager.createNamedQuery("stateByStateUuid", StateEntity.class).setParameter("uuid", StateUuid).getSingleResult();
+            return entityManager.createNamedQuery("allStates", StateEntity.class).getResultList();
         } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
-    public StateEntity getStateById(long id){
-        try {
-            return entityManager.createNamedQuery("getStateById" , StateEntity.class).setParameter("id", id).getSingleResult();
-        }catch (NoResultException nre){
             return null;
         }
     }

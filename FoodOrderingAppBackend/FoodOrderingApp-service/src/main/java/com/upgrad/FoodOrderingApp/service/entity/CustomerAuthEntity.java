@@ -1,74 +1,50 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-
+/**
+ * CustomerAuthEntity class contains all the attributes to be mapped to all the fields in 'customer_auth' table in the database
+ */
 @Entity
 @Table(name = "customer_auth")
-
 @NamedQueries({
-        @NamedQuery(name = "customerAuthTokenByAccessToken", query = "select ct from CustomerAuthEntity ct where ct.accessToken = :accessToken ")
+        @NamedQuery(name = "customerAuthByAccessToken", query = "select c from CustomerAuthEntity c where c.accessToken = :accessToken"),
 })
-
 public class CustomerAuthEntity implements Serializable {
+
     @Id
-    @Column(
-            name = "ID"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(
-            name = "UUID"
-    )
-    @Size(
-            max = 200
-    )
+    @Column(name = "uuid")
+    @NotNull
+    @Size(max = 200)
     private String uuid;
 
     @ManyToOne
-    @OnDelete(
-            action = OnDeleteAction.CASCADE
-    )
-    @JoinColumn(
-            name = "CUSTOMER_ID"
-    )
+    @JoinColumn(name = "customer_id")
+    @NotNull
     private CustomerEntity customer;
 
-    @Column(
-            name = "ACCESS_TOKEN"
-    )
+    @Column(name = "access_token")
     @NotNull
-    @Size(
-            max = 500
-    )
+    @Size(max = 500)
     private String accessToken;
 
-    @Column(
-            name = "LOGIN_AT"
-    )
+    @Column(name = "login_at")
     @NotNull
     private ZonedDateTime loginAt;
 
-    @Column(
-            name = "EXPIRES_AT"
-    )
+    @Column(name = "logout_at")
+    private ZonedDateTime logoutAt;
+
+    @Column(name = "expires_at")
     @NotNull
     private ZonedDateTime expiresAt;
-
-    @Column(
-            name = "LOGOUT_AT"
-    )
-    private ZonedDateTime logoutAt;
 
     public Integer getId() {
         return id;
@@ -110,14 +86,6 @@ public class CustomerAuthEntity implements Serializable {
         this.loginAt = loginAt;
     }
 
-    public ZonedDateTime getExpiresAt() {
-        return expiresAt;
-    }
-
-    public void setExpiresAt(ZonedDateTime expiresAt) {
-        this.expiresAt = expiresAt;
-    }
-
     public ZonedDateTime getLogoutAt() {
         return logoutAt;
     }
@@ -125,9 +93,12 @@ public class CustomerAuthEntity implements Serializable {
     public void setLogoutAt(ZonedDateTime logoutAt) {
         this.logoutAt = logoutAt;
     }
+
+    public ZonedDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(ZonedDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
 }
-
-
-
-
-
