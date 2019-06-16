@@ -81,8 +81,8 @@
                 <configuration>
                     <driver>${postgresql.driver.name}</driver>
                     <url>jdbc:postgresql://${server.host}:${server.port}/${database.name}</url>
-                    <username>${database.username}</username>
-                    <password>${database.password}</password>
+                    <username>postgres</username>
+                    <password>aravind</password>
                     <autocommit>true</autocommit>
                     <onError>abort</onError>
                 </configuration>

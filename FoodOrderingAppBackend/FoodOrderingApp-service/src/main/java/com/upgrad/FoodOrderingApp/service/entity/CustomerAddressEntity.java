@@ -1,68 +1,49 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/**
+ * CustomerAddressEntity class contains all the attributes to be mapped to all the fields in 'customer_address' table in the database
+ */
 @Entity
-@Table(
-        name = "customer_address"
-)
-@NamedQueries({
-        @NamedQuery(name = "customerAddressByAddressId", query = "select ca from CustomerAddressEntity ca where ca.id = :id"),//gets customeraddress by addressId
-        @NamedQuery(name = "customerAddressesListByCustomerId", query = "select ca from CustomerAddressEntity ca where ca.customer = :customer order by ca.address desc")//gets customeraddresslist by customer
-})
+@Table(name = "customer_address")
 public class CustomerAddressEntity implements Serializable {
 
     @Id
-    @Column(
-            name = "ID"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @ManyToOne
-    @OnDelete(
-            action = OnDeleteAction.CASCADE
-    )
-    @JoinColumn(
-            name = "CUSTOMER_ID"
-    )
-    private CustomerEntity customer;
+    @Column(name = "customer_id")
+    @NotNull
+    private Integer customer;
 
-    @ManyToOne
-    @OnDelete(
-            action = OnDeleteAction.CASCADE
-    )
-    @JoinColumn(
-            name = "ADDRESS_ID"
-    )
-    private AddressEntity address;
+    @Column(name = "address_id")
+    @NotNull
+    private Integer address;
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public CustomerEntity getCustomer() {
+    public Integer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerEntity customer) {
+    public void setCustomer(Integer customer) {
         this.customer = customer;
     }
 
-    public AddressEntity getAddress() {
+    public Integer getAddress() {
         return address;
     }
 
-    public void setAddress(AddressEntity address) {
+    public void setAddress(Integer address) {
         this.address = address;
     }
 }
